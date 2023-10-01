@@ -1,0 +1,67 @@
+# Game data
+SIZE = 4
+WIN_NUMBER = 2048
+
+POWERS = {
+2:      1,
+4:      2,
+8:      3,
+16:     4,
+32:     5,
+64:     6,
+128:    7,
+256:    8,
+512:    9,
+1024:   10,
+2048:   11}
+
+# Styling
+CELL_SIZE = 200
+PADDING = int(CELL_SIZE / 7)
+BORDER_RADIUS = int(CELL_SIZE / 20)
+WINDOW_SIZE = CELL_SIZE * 4 + PADDING * 5
+
+BACKGROUND_COLOR = "#bbada0"
+
+CELL_COLOR = {
+0:      "#cdc1b4",
+2:      "#eee4da",
+4:      "#eee1c9",
+8:      "#f3b27a",
+16:     "#f69664",
+32:     "#f77c5f",
+64:     "#f75f3b",
+128:    "#eed072",
+256:    "#edcc62",
+512:    "#edc850",
+1024:   "#edc53f",
+2048:   "#edc22e"}
+
+TEXT_COLOR = {
+2:      "#776e65",
+4:      "#776e65",
+8:      "#f9f6f2",
+16:     "#f9f6f2",
+32:     "#f9f6f2",
+64:     "#f9f6f2",
+128:    "#f9f6f2",
+256:    "#f9f6f2",
+512:    "#f9f6f2",
+1024:   "#f9f6f2",
+2048:   "#f9f6f2"}
+
+FONT_NAME = "Tahoma"
+
+FONT_SIZE = {
+2:      int(CELL_SIZE / 2),
+4:      int(CELL_SIZE / 2),
+8:      int(CELL_SIZE / 2),
+16:     int(CELL_SIZE / 2),
+32:     int(CELL_SIZE / 2),
+64:     int(CELL_SIZE / 2),
+128:    int(CELL_SIZE / 2.5),
+256:    int(CELL_SIZE / 2.5),
+512:    int(CELL_SIZE / 2.5),
+1024:   int(CELL_SIZE / 3),
+2048:   int(CELL_SIZE / 3)}
+
