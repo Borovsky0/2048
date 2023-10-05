@@ -47,10 +47,9 @@ class Button:
             self.rect,
             border_radius=c.BORDER_RADIUS
         )
-        font = pygame.font.SysFont(
+        font = pygame.font.Font(
             self.font,
-            self.font_size,
-            bold=True
+            self.font_size
         )
 
         if self.text_layout == ButtonTextLayout.default:

@@ -3,6 +3,8 @@ import constants as c
 import logic
 import button
 
+import time
+
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode(
@@ -24,9 +26,30 @@ new_game_button = button.Button(
     c.NEW_GAME_BUTTON_HEIGHT,
     c.CELL_COLOR[0],
     "NEW GAME",
-    "#fcfbf4",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
     c.FONT_NAME,
-    int(c.NEW_GAME_BUTTON_HEIGHT / 2)
+    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+    button.ButtonTextLayout.column
+)
+
+yes_button = button.Button(
+    c.NEW_GAME_BUTTON_WIDTH,
+    c.NEW_GAME_BUTTON_HEIGHT,
+    c.CELL_COLOR[0],
+    "YES",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.FONT_NAME,
+    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+)
+
+no_button = button.Button(
+    c.NEW_GAME_BUTTON_WIDTH,
+    c.NEW_GAME_BUTTON_HEIGHT,
+    c.CELL_COLOR[0],
+    "NO",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.FONT_NAME,
+    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
 )
 
 
@@ -88,7 +111,54 @@ def run():
                         matrix = logic.add(matrix)
 
         if draw(matrix):
-            matrix = logic.game(c.SIZE)
+            check_screen = pygame.Surface(
+                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
+            )
+            # устанавливаем прозрачность
+            check_screen.set_alpha(c.CHECK_SCREEN_FONT_SIZE)
+            check_screen.fill(c.BACKGROUND_COLOR)
+            screen.blit(check_screen, (0, 0))
+
+            check_screen_font = pygame.font.Font(
+                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
+            )
+            check_screen_text = check_screen_font.render(
+                "ARE YOU SURE?",
+                True,
+                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
+            )
+            screen.blit(
+                check_screen_text,
+                check_screen_text.get_rect(
+                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
+                )
+            )
+
+            yes_button.draw(
+                screen,
+                c.PADDING * 2 + c.CELL_SIZE,
+                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+            )
+
+            no_button.draw(
+                screen,
+                c.PADDING * 3 + c.CELL_SIZE * 2,
+                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+            )
+            pygame.display.flip()
+
+            win_screen_is_on = True
+            while win_screen_is_on:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        win_screen_is_on = False
+                        game_done = True
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if yes_button.rect.collidepoint(event.pos):
+                            matrix = logic.game(c.SIZE)
+                            win_screen_is_on = False
+                        if no_button.rect.collidepoint(event.pos):
+                            win_screen_is_on = False
 
         pygame.display.flip()
 
