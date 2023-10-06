@@ -111,7 +111,7 @@ def run():
                 (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
             )
             # устанавливаем прозрачность
-            check_screen.set_alpha(c.CHECK_SCREEN_FONT_SIZE)
+            check_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
             check_screen.fill(c.BACKGROUND_COLOR)
             screen.blit(check_screen, (0, 0))
 
