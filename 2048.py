@@ -211,6 +211,56 @@ def run():
                             matrix = logic.game(c.SIZE)
                             win_screen_is_on = False
 
+        if not logic.game_not_over(matrix):
+            lose_screen = pygame.Surface(
+                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
+            )
+            lose_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
+            lose_screen.fill(c.LOSE_SCREEN_COLOR)
+            screen.blit(lose_screen, (0, 0))
+
+            lose_screen_font = pygame.font.Font(
+                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
+            )
+            lose_screen_text = lose_screen_font.render(
+                "YOU LOSE!",
+                True,
+                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
+            )
+            screen.blit(
+                lose_screen_text,
+                lose_screen_text.get_rect(
+                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
+                )
+            )
+
+            lose_screen_new_game_button = button.Button(
+                c.NEW_GAME_BUTTON_WIDTH,
+                c.NEW_GAME_BUTTON_HEIGHT,
+                c.CELL_COLOR[0],
+                "NEW GAME",
+                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+                c.FONT_NAME,
+                c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+                button.ButtonTextLayout.column
+            )
+            lose_screen_new_game_button.draw(
+                screen,
+                c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
+                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+            )
+            pygame.display.flip()
+
+            lose_screen_is_on = True
+            while lose_screen_is_on:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        lose_screen_is_on = False
+                        game_done = True
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if lose_screen_new_game_button.rect.collidepoint(event.pos):
+                            matrix = logic.game(c.SIZE)
+                            lose_screen_is_on = False
 
 if __name__ == '__main__':
     run()
