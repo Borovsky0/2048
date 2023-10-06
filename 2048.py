@@ -2,6 +2,7 @@ import pygame
 import constants as c
 import logic
 import button
+import overlay_screen
 
 pygame.init()
 pygame.mixer.init()
@@ -18,6 +19,39 @@ commands = {
     pygame.K_LEFT: logic.left,
     pygame.K_RIGHT: logic.right
 }
+
+check_screen = overlay_screen.OverlayScreen(
+    c.WINDOW_WIDTH,
+    c.WINDOW_HEIGHT,
+    c.BACKGROUND_COLOR,
+    c.CHECK_SCREEN_ALPHA,
+    "ARE YOU SURE?",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.FONT_NAME,
+    c.CHECK_SCREEN_FONT_SIZE
+)
+
+lose_screen = overlay_screen.OverlayScreen(
+    c.WINDOW_WIDTH,
+    c.WINDOW_HEIGHT,
+    c.LOSE_SCREEN_COLOR,
+    c.CHECK_SCREEN_ALPHA,
+    "YOU LOSE!",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.FONT_NAME,
+    c.CHECK_SCREEN_FONT_SIZE
+)
+
+win_screen = overlay_screen.OverlayScreen(
+    c.WINDOW_WIDTH,
+    c.WINDOW_HEIGHT,
+    c.WIN_SCREEN_COLOR,
+    c.CHECK_SCREEN_ALPHA,
+    "YOU WIN!",
+    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.FONT_NAME,
+    c.CHECK_SCREEN_FONT_SIZE
+)
 
 main_new_game_button = button.Button(
     c.NEW_GAME_BUTTON_WIDTH,
@@ -108,27 +142,9 @@ def run():
                         matrix = logic.add(matrix)
 
         if draw(matrix):
-            check_screen = pygame.Surface(
-                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
-            )
-            # устанавливаем прозрачность
-            check_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
-            check_screen.fill(c.BACKGROUND_COLOR)
-            screen.blit(check_screen, (0, 0))
-
-            check_screen_font = pygame.font.Font(
-                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
-            )
-            check_screen_text = check_screen_font.render(
-                "ARE YOU SURE?",
-                True,
-                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
-            )
-            screen.blit(
-                check_screen_text,
-                check_screen_text.get_rect(
-                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
-                )
+            check_screen.draw(
+                screen,
+                (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
             yes_button.draw(
@@ -161,26 +177,9 @@ def run():
         clock.tick(c.FPS)
 
         if logic.win(matrix, c.WIN_NUMBER):
-            win_screen = pygame.Surface(
-                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
-            )
-            win_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
-            win_screen.fill(c.WIN_SCREEN_COLOR)
-            screen.blit(win_screen, (0, 0))
-
-            win_screen_font = pygame.font.Font(
-                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
-            )
-            win_screen_text = win_screen_font.render(
-                "YOU WIN!",
-                True,
-                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
-            )
-            screen.blit(
-                win_screen_text,
-                win_screen_text.get_rect(
-                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
-                )
+            win_screen.draw(
+                screen,
+                (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
             win_screen_new_game_button = button.Button(
@@ -212,26 +211,9 @@ def run():
                             win_screen_is_on = False
 
         if not logic.game_not_over(matrix):
-            lose_screen = pygame.Surface(
-                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
-            )
-            lose_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
-            lose_screen.fill(c.LOSE_SCREEN_COLOR)
-            screen.blit(lose_screen, (0, 0))
-
-            lose_screen_font = pygame.font.Font(
-                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
-            )
-            lose_screen_text = lose_screen_font.render(
-                "YOU LOSE!",
-                True,
-                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
-            )
-            screen.blit(
-                lose_screen_text,
-                lose_screen_text.get_rect(
-                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
-                )
+            lose_screen.draw(
+                screen,
+                (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
             lose_screen_new_game_button = button.Button(
@@ -261,6 +243,7 @@ def run():
                         if lose_screen_new_game_button.rect.collidepoint(event.pos):
                             matrix = logic.game(c.SIZE)
                             lose_screen_is_on = False
+
 
 if __name__ == '__main__':
     run()
