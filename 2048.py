@@ -24,62 +24,62 @@ check_screen = overlay_screen.OverlayScreen(
     c.WINDOW_WIDTH,
     c.WINDOW_HEIGHT,
     c.BACKGROUND_COLOR,
-    c.CHECK_SCREEN_ALPHA,
+    c.OVERLAY_SCREEN_ALPHA,
     "ARE YOU SURE?",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
-    c.CHECK_SCREEN_FONT_SIZE
+    c.OVERLAY_SCREEN_FONT_SIZE
 )
 
 lose_screen = overlay_screen.OverlayScreen(
     c.WINDOW_WIDTH,
     c.WINDOW_HEIGHT,
     c.LOSE_SCREEN_COLOR,
-    c.CHECK_SCREEN_ALPHA,
+    c.OVERLAY_SCREEN_ALPHA,
     "YOU LOSE!",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
-    c.CHECK_SCREEN_FONT_SIZE
+    c.OVERLAY_SCREEN_FONT_SIZE
 )
 
 win_screen = overlay_screen.OverlayScreen(
     c.WINDOW_WIDTH,
     c.WINDOW_HEIGHT,
     c.WIN_SCREEN_COLOR,
-    c.CHECK_SCREEN_ALPHA,
+    c.OVERLAY_SCREEN_ALPHA,
     "YOU WIN!",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
-    c.CHECK_SCREEN_FONT_SIZE
+    c.OVERLAY_SCREEN_FONT_SIZE
 )
 
 main_new_game_button = button.Button(
-    c.NEW_GAME_BUTTON_WIDTH,
-    c.NEW_GAME_BUTTON_HEIGHT,
+    c.BUTTON_WIDTH,
+    c.BUTTON_HEIGHT,
     c.CELL_COLOR[0],
     "NEW GAME",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
     c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
     button.ButtonTextLayout.column
 )
 
 yes_button = button.Button(
-    c.NEW_GAME_BUTTON_WIDTH,
-    c.NEW_GAME_BUTTON_HEIGHT,
+    c.BUTTON_WIDTH,
+    c.BUTTON_HEIGHT,
     c.CELL_COLOR[0],
     "YES",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
     c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
 )
 
 no_button = button.Button(
-    c.NEW_GAME_BUTTON_WIDTH,
-    c.NEW_GAME_BUTTON_HEIGHT,
+    c.BUTTON_WIDTH,
+    c.BUTTON_HEIGHT,
     c.CELL_COLOR[0],
     "NO",
-    c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+    c.TEXT_FONT_COLOR,
     c.FONT_NAME,
     c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
 )
@@ -95,7 +95,7 @@ def draw(matrix):
     if main_new_game_button.draw(screen, x, y):
         restart = True
 
-    y += c.PADDING + c.NEW_GAME_BUTTON_HEIGHT
+    y += c.PADDING + c.BUTTON_HEIGHT
     for i in range(len(matrix)):
         x = c.PADDING
         for j in range(len(matrix)):
@@ -150,13 +150,13 @@ def run():
             yes_button.draw(
                 screen,
                 c.PADDING * 2 + c.CELL_SIZE,
-                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+                c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
             )
 
             no_button.draw(
                 screen,
                 c.PADDING * 3 + c.CELL_SIZE * 2,
-                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+                c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
             )
             pygame.display.flip()
 
@@ -183,11 +183,11 @@ def run():
             )
 
             win_screen_new_game_button = button.Button(
-                c.NEW_GAME_BUTTON_WIDTH,
-                c.NEW_GAME_BUTTON_HEIGHT,
+                c.BUTTON_WIDTH,
+                c.BUTTON_HEIGHT,
                 c.CELL_COLOR[0],
                 "NEW GAME",
-                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+                c.TEXT_FONT_COLOR,
                 c.FONT_NAME,
                 c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
                 button.ButtonTextLayout.column
@@ -195,7 +195,7 @@ def run():
             win_screen_new_game_button.draw(
                 screen,
                 c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
-                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+                c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
             )
             pygame.display.flip()
 
@@ -217,11 +217,11 @@ def run():
             )
 
             lose_screen_new_game_button = button.Button(
-                c.NEW_GAME_BUTTON_WIDTH,
-                c.NEW_GAME_BUTTON_HEIGHT,
+                c.BUTTON_WIDTH,
+                c.BUTTON_HEIGHT,
                 c.CELL_COLOR[0],
                 "NEW GAME",
-                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+                c.TEXT_FONT_COLOR,
                 c.FONT_NAME,
                 c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
                 button.ButtonTextLayout.column
@@ -229,7 +229,7 @@ def run():
             lose_screen_new_game_button.draw(
                 screen,
                 c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
-                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+                c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
             )
             pygame.display.flip()
 
@@ -243,6 +243,7 @@ def run():
                         if lose_screen_new_game_button.rect.collidepoint(event.pos):
                             matrix = logic.game(c.SIZE)
                             lose_screen_is_on = False
+
 
 
 if __name__ == '__main__':
