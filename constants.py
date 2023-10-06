@@ -35,6 +35,7 @@ CHECK_SCREEN_ALPHA = 192
 CHECK_SCREEN_FONT_SIZE = WINDOW_WIDTH // 10
 
 BACKGROUND_COLOR = "#bbada0"
+WIN_SCREEN_COLOR = "#edc22e"
 
 CELL_COLOR = {
     0:      "#cdc1b4",
@@ -66,7 +67,6 @@ TEXT_COLOR = {
 }
 
 FONT_NAME = "fonts/tahomabd.ttf"
-# FONT_NAME = "Arial"
 
 FONT_SIZE = {
     2:      int(CELL_SIZE / 2),
