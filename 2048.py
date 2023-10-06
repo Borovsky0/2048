@@ -3,15 +3,12 @@ import constants as c
 import logic
 import button
 
-import time
-
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode(
     (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
-    pygame.RESIZABLE
 )
-pygame.display.set_caption("AI 2048")
+pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
 commands = {
@@ -75,10 +72,9 @@ def draw(matrix):
             )
 
             if matrix[i][j]:
-                font = pygame.font.SysFont(
+                font = pygame.font.Font(
                     c.FONT_NAME,
                     c.FONT_SIZE[matrix[i][j]],
-                    bold=True
                 )
 
                 text = font.render(

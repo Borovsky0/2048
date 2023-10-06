@@ -65,7 +65,7 @@ TEXT_COLOR = {
     2048:   "#f9f6f2"
 }
 
-FONT_NAME = "fonts/OpenSans-Bold.ttf"
+FONT_NAME = "fonts/tahomabd.ttf"
 # FONT_NAME = "Arial"
 
 FONT_SIZE = {
