@@ -7,7 +7,7 @@ pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode(
     (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
-    pygame.RESIZABLE
+    # pygame.RESIZABLE
 )
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
@@ -19,7 +19,7 @@ commands = {
     pygame.K_RIGHT: logic.right
 }
 
-new_game_button = button.Button(
+main_new_game_button = button.Button(
     c.NEW_GAME_BUTTON_WIDTH,
     c.NEW_GAME_BUTTON_HEIGHT,
     c.CELL_COLOR[0],
@@ -58,7 +58,7 @@ def draw(matrix):
 
     # если кнопка новой игры нажата, то restart = True
     restart = False
-    if new_game_button.draw(screen, x, y):
+    if main_new_game_button.draw(screen, x, y):
         restart = True
 
     y += c.PADDING + c.NEW_GAME_BUTTON_HEIGHT
@@ -144,6 +144,62 @@ def run():
             )
             pygame.display.flip()
 
+            check_screen_is_on = True
+            while check_screen_is_on:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        check_screen_is_on = False
+                        game_done = True
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if yes_button.rect.collidepoint(event.pos):
+                            matrix = logic.game(c.SIZE)
+                            check_screen_is_on = False
+                        if no_button.rect.collidepoint(event.pos):
+                            check_screen_is_on = False
+
+        pygame.display.flip()
+        clock.tick(c.FPS)
+
+        if logic.win(matrix, c.WIN_NUMBER):
+            win_screen = pygame.Surface(
+                (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
+            )
+            win_screen.set_alpha(c.CHECK_SCREEN_ALPHA)
+            win_screen.fill(c.WIN_SCREEN_COLOR)
+            screen.blit(win_screen, (0, 0))
+
+            win_screen_font = pygame.font.Font(
+                c.FONT_NAME, c.CHECK_SCREEN_FONT_SIZE
+            )
+            win_screen_text = win_screen_font.render(
+                "YOU WIN!",
+                True,
+                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR
+            )
+            screen.blit(
+                win_screen_text,
+                win_screen_text.get_rect(
+                    center=(c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
+                )
+            )
+
+            win_screen_new_game_button = button.Button(
+                c.NEW_GAME_BUTTON_WIDTH,
+                c.NEW_GAME_BUTTON_HEIGHT,
+                c.CELL_COLOR[0],
+                "NEW GAME",
+                c.NEW_GAME_BUTTON_TEXT_FONT_COLOR,
+                c.FONT_NAME,
+                c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+                button.ButtonTextLayout.column
+            )
+            win_screen_new_game_button.draw(
+                screen,
+                c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
+                c.WINDOW_HEIGHT / 2 + c.CHECK_SCREEN_FONT_SIZE
+            )
+            pygame.display.flip()
+
             win_screen_is_on = True
             while win_screen_is_on:
                 for event in pygame.event.get():
@@ -151,17 +207,9 @@ def run():
                         win_screen_is_on = False
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if yes_button.rect.collidepoint(event.pos):
+                        if win_screen_new_game_button.rect.collidepoint(event.pos):
                             matrix = logic.game(c.SIZE)
                             win_screen_is_on = False
-                        if no_button.rect.collidepoint(event.pos):
-                            win_screen_is_on = False
-
-        pygame.display.flip()
-        clock.tick(c.FPS)
-
-        if logic.win(matrix, c.WIN_NUMBER):
-            game_done = True
 
 
 if __name__ == '__main__':
