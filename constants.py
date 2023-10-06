@@ -82,3 +82,4 @@ FONT_SIZE = {
     2048:   int(CELL_SIZE / 3)
 }
 
+FPS = 60

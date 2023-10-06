@@ -7,6 +7,7 @@ pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode(
     (c.WINDOW_WIDTH, c.WINDOW_HEIGHT),
+    pygame.RESIZABLE
 )
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
@@ -157,6 +158,7 @@ def run():
                             win_screen_is_on = False
 
         pygame.display.flip()
+        clock.tick(c.FPS)
 
         if logic.win(matrix, c.WIN_NUMBER):
             game_done = True
