@@ -22,69 +22,7 @@ commands = {
 }
 '''
 
-check_screen = overlay_screen.OverlayScreen(
-    c.WINDOW_WIDTH,
-    c.WINDOW_HEIGHT,
-    c.BACKGROUND_COLOR,
-    c.OVERLAY_SCREEN_ALPHA,
-    "ARE YOU SURE?",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.OVERLAY_SCREEN_FONT_SIZE
-)
 
-lose_screen = overlay_screen.OverlayScreen(
-    c.WINDOW_WIDTH,
-    c.WINDOW_HEIGHT,
-    c.LOSE_SCREEN_COLOR,
-    c.OVERLAY_SCREEN_ALPHA,
-    "YOU LOSE!",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.OVERLAY_SCREEN_FONT_SIZE
-)
-
-win_screen = overlay_screen.OverlayScreen(
-    c.WINDOW_WIDTH,
-    c.WINDOW_HEIGHT,
-    c.WIN_SCREEN_COLOR,
-    c.OVERLAY_SCREEN_ALPHA,
-    "YOU WIN!",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.OVERLAY_SCREEN_FONT_SIZE
-)
-
-main_new_game_button = button.Button(
-    c.BUTTON_WIDTH,
-    c.BUTTON_HEIGHT,
-    c.CELL_COLOR[0],
-    "NEW GAME",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
-    button.ButtonTextLayout.column
-)
-
-yes_button = button.Button(
-    c.BUTTON_WIDTH,
-    c.BUTTON_HEIGHT,
-    c.CELL_COLOR[0],
-    "YES",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
-)
-
-no_button = button.Button(
-    c.BUTTON_WIDTH,
-    c.BUTTON_HEIGHT,
-    c.CELL_COLOR[0],
-    "NO",
-    c.TEXT_FONT_COLOR,
-    c.FONT_NAME,
-    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
-)
 
 
 def draw(matrix, score):
@@ -96,7 +34,7 @@ def draw(matrix, score):
 
     # если кнопка новой игры нажата, то restart = True
     restart = False
-    if main_new_game_button.draw(screen, x, y):
+    if c.MAIN_NEW_GAME_BUTTON.draw(screen, x, y):
         restart = True
 
     y += c.PADDING + c.BUTTON_HEIGHT
@@ -142,35 +80,34 @@ def run():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     done = game.up()
-                    if done: 
+                    if done:
                         game.add()
                 elif event.key == pygame.K_DOWN:
                     done = game.down()
-                    if done: 
+                    if done:
                         game.add()
                 elif event.key == pygame.K_LEFT:
                     done = game.left()
-                    if done: 
+                    if done:
                         game.left()
                 elif event.key == pygame.K_RIGHT:
                     done = game.right()
-                    if done: 
+                    if done:
                         game.add()
-                        
 
         if draw(game.matrix, game.score):
-            check_screen.draw(
+            c.CHECK_SCREEN.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
-            yes_button.draw(
+            c.YES_BUTTON.draw(
                 screen,
                 c.PADDING * 2 + c.CELL_SIZE,
                 c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
             )
 
-            no_button.draw(
+            c.NO_BUTTON.draw(
                 screen,
                 c.PADDING * 3 + c.CELL_SIZE * 2,
                 c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
@@ -184,32 +121,22 @@ def run():
                         check_screen_is_on = False
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if yes_button.rect.collidepoint(event.pos):
+                        if c.YES_BUTTON.rect.collidepoint(event.pos):
                             game = Logic(c.SIZE)
                             check_screen_is_on = False
-                        if no_button.rect.collidepoint(event.pos):
+                        if c.NO_BUTTON.rect.collidepoint(event.pos):
                             check_screen_is_on = False
 
         pygame.display.flip()
         clock.tick(c.FPS)
 
         if game.win(c.WIN_NUMBER):
-            win_screen.draw(
+            c.WIN_SCREEN.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
-            win_screen_new_game_button = button.Button(
-                c.BUTTON_WIDTH,
-                c.BUTTON_HEIGHT,
-                c.CELL_COLOR[0],
-                "NEW GAME",
-                c.TEXT_FONT_COLOR,
-                c.FONT_NAME,
-                c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
-                button.ButtonTextLayout.column
-            )
-            win_screen_new_game_button.draw(
+            c.WIN_SCREEN_NEW_GAME_BUTTON.draw(
                 screen,
                 c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
                 c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
@@ -223,27 +150,17 @@ def run():
                         win_screen_is_on = False
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if win_screen_new_game_button.rect.collidepoint(event.pos):
+                        if c.WIN_SCREEN_NEW_GAME_BUTTON.rect.collidepoint(event.pos):
                             game = Logic(c.SIZE)
                             win_screen_is_on = False
 
         if not game.game_not_over():
-            lose_screen.draw(
+            c.LOSE_SCREEN.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
             )
 
-            lose_screen_new_game_button = button.Button(
-                c.BUTTON_WIDTH,
-                c.BUTTON_HEIGHT,
-                c.CELL_COLOR[0],
-                "NEW GAME",
-                c.TEXT_FONT_COLOR,
-                c.FONT_NAME,
-                c.NEW_GAME_BUTTON_TEXT_FONT_SIZE,
-                button.ButtonTextLayout.column
-            )
-            lose_screen_new_game_button.draw(
+            c.LOSE_SCREEN_NEW_GAME_BUTTON.draw(
                 screen,
                 c.PADDING * 2.5 + c.CELL_SIZE * 1.5,
                 c.WINDOW_HEIGHT / 2 + c.OVERLAY_SCREEN_FONT_SIZE
@@ -257,10 +174,9 @@ def run():
                         lose_screen_is_on = False
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if lose_screen_new_game_button.rect.collidepoint(event.pos):
+                        if c.LOSE_SCREEN_NEW_GAME_BUTTON.rect.collidepoint(event.pos):
                             game = Logic(c.SIZE)
                             lose_screen_is_on = False
-
 
 
 if __name__ == '__main__':
