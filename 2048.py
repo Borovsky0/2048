@@ -18,10 +18,22 @@ commands = {
     pygame.K_RIGHT: "right"
 }
 
+def save_score(score):
+    with open('score.bin', 'wb') as file:
+        file.write(score.to_bytes(4, byteorder='big', signed=True))                    
 
-def draw(matrix, score):
+def load_score():
+    try:
+        with open('score.bin', 'rb') as file:
+            return int.from_bytes(file.read(), byteorder='big', signed=True)
+    except FileNotFoundError:
+        save_score(0)
+        return 0
+
+def draw(matrix, score, highscore):
     # Временно
-    print(score)
+    print('Score: ', score)
+    print('Highscore: ', highscore)
 
     screen.fill(c.BACKGROUND_COLOR)
     x, y = c.PADDING, c.PADDING
@@ -64,6 +76,9 @@ def draw(matrix, score):
 
 
 def run():
+
+    highscore = load_score()
+
     game = Logic(c.SIZE)
     game_done = False
 
@@ -76,8 +91,11 @@ def run():
                     done = getattr(game, commands[event.key])()
                     if done:
                         game.add()
+                        if game.score > highscore:
+                            highscore = game.score
+                            save_score(highscore)
 
-        if draw(game.matrix, game.score):
+        if draw(game.matrix, game.score, highscore):
             c.CHECK_SCREEN.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
