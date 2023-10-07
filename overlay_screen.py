@@ -1,5 +1,6 @@
 import pygame
-import constants as c
+
+pygame.init()
 
 
 class OverlayScreen:

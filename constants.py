@@ -1,7 +1,7 @@
-# Game data
 import button
 import overlay_screen
 
+# Game data
 SIZE = 4
 WIN_NUMBER = 2048
 

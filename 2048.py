@@ -1,8 +1,6 @@
 import pygame
 import constants as c
 from logic import Logic
-import button
-import overlay_screen
 
 pygame.init()
 pygame.mixer.init()
@@ -21,8 +19,6 @@ commands = {
     pygame.K_RIGHT: game.right
 }
 '''
-
-
 
 
 def draw(matrix, score):
