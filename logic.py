@@ -2,13 +2,13 @@ import random
 
 
 class Logic:
-    def __init__(self, n): 
+    def __init__(self, n):
         self.n = n
         self.score = 0
         self.matrix = [[0] * n for _ in range(n)]
         self.add()
         self.add()
-    
+
     def add(self):
         x = random.randint(0, self.n - 1)
         y = random.randint(0, self.n - 1)
@@ -44,9 +44,9 @@ class Logic:
                     count += 1
         self.matrix = new
         return done
-    
+
     def compress_row0(self):
-        new_row = [0] * self.n  
+        new_row = [0] * self.n
         done = False
         count = 0
         for j in range(self.n):
@@ -55,8 +55,8 @@ class Logic:
                 if j != count:
                     done = True
                 count += 1
-    
-        self.matrix[0] = new_row 
+
+        self.matrix[0] = new_row
         return done
 
     def merge(self, done):
@@ -68,7 +68,6 @@ class Logic:
                     self.score += self.matrix[i][j]
                     done = True
         return done
-
 
     def game_not_over(self):
         for i in range(self.n):
@@ -84,7 +83,6 @@ class Logic:
                 if self.matrix[i + 1][j] == self.matrix[i][j]:
                     return True
         return False
-
 
     def win(self, number):
         for i in range(self.n):

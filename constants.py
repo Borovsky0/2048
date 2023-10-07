@@ -1,3 +1,6 @@
+import button
+import overlay_screen
+
 # Game data
 SIZE = 4
 WIN_NUMBER = 2048
@@ -17,7 +20,7 @@ POWERS = {
 }
 
 # Styling
-CELL_SIZE = 200
+CELL_SIZE = 150
 
 BUTTON_WIDTH = CELL_SIZE
 BUTTON_HEIGHT = int(CELL_SIZE / 2)
@@ -84,3 +87,89 @@ FONT_SIZE = {
 }
 
 FPS = 60
+
+CHECK_SCREEN = overlay_screen.OverlayScreen(
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    BACKGROUND_COLOR,
+    OVERLAY_SCREEN_ALPHA,
+    "ARE YOU SURE?",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    OVERLAY_SCREEN_FONT_SIZE
+)
+
+LOSE_SCREEN = overlay_screen.OverlayScreen(
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    LOSE_SCREEN_COLOR,
+    OVERLAY_SCREEN_ALPHA,
+    "GAME OVER!",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    OVERLAY_SCREEN_FONT_SIZE
+)
+
+WIN_SCREEN = overlay_screen.OverlayScreen(
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    WIN_SCREEN_COLOR,
+    OVERLAY_SCREEN_ALPHA,
+    "YOU WIN!",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    OVERLAY_SCREEN_FONT_SIZE
+)
+
+MAIN_NEW_GAME_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    CELL_COLOR[0],
+    "NEW GAME",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+    button.ButtonTextLayout.column
+)
+
+YES_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    CELL_COLOR[0],
+    "YES",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+)
+
+NO_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    CELL_COLOR[0],
+    "NO",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+)
+
+WIN_SCREEN_NEW_GAME_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    CELL_COLOR[0],
+    "NEW GAME",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+    button.ButtonTextLayout.column
+)
+
+LOSE_SCREEN_NEW_GAME_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    CELL_COLOR[0],
+    "NEW GAME",
+    TEXT_FONT_COLOR,
+    FONT_NAME,
+    NEW_GAME_BUTTON_TEXT_FONT_SIZE,
+    button.ButtonTextLayout.column
+)
