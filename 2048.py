@@ -11,14 +11,12 @@ screen = pygame.display.set_mode(
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
-'''
 commands = {
-    pygame.K_UP: game.up,
-    pygame.K_DOWN: game.down,
-    pygame.K_LEFT: game.left,
-    pygame.K_RIGHT: game.right
+    pygame.K_UP: "up",
+    pygame.K_DOWN: "down",
+    pygame.K_LEFT: "left",
+    pygame.K_RIGHT: "right"
 }
-'''
 
 
 def draw(matrix, score):
@@ -74,20 +72,8 @@ def run():
             if event.type == pygame.QUIT:
                 game_done = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    done = game.up()
-                    if done:
-                        game.add()
-                elif event.key == pygame.K_DOWN:
-                    done = game.down()
-                    if done:
-                        game.add()
-                elif event.key == pygame.K_LEFT:
-                    done = game.left()
-                    if done:
-                        game.left()
-                elif event.key == pygame.K_RIGHT:
-                    done = game.right()
+                if event.key in commands:
+                    done = getattr(game, commands[event.key])()
                     if done:
                         game.add()
 

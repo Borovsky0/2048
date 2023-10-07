@@ -15,7 +15,7 @@ class Logic:
         while self.matrix[x][y] != 0:
             x = random.randint(0, self.n - 1)
             y = random.randint(0, self.n - 1)
-        self.matrix[x][y] = 2
+        self.matrix[x][y] = random.choice([2] * 9 + [4])
 
     def reverse(self):
         new = [[0] * self.n for _ in range(self.n)]
