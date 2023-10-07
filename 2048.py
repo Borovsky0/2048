@@ -36,7 +36,8 @@ def load_score():
     except FileNotFoundError:
         save_score(0)
         return 0
-    
+
+
 def save_state(matrix, score):
     with open('state.bin', 'wb') as file:
         for row in matrix:
@@ -44,6 +45,7 @@ def save_state(matrix, score):
                 file.write(number.to_bytes(4, byteorder='big', signed=True))
 
         file.write(score.to_bytes(4, byteorder='big', signed=True))
+
 
 def load_state():
     game = Logic(c.SIZE)
@@ -63,8 +65,8 @@ def load_state():
 
 def draw(matrix, score, highscore):
     # Временно
-    print('Score: ', score)
-    print('Highscore: ', highscore)
+    # print('Score: ', score)
+    # print('Highscore: ', highscore)
 
     screen.fill(c.BACKGROUND_COLOR)
     x, y = c.PADDING, c.PADDING
