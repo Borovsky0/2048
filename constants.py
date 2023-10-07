@@ -72,7 +72,8 @@ TEXT_COLOR = {
     2048:   "#f9f6f2"
 }
 
-FONT_NAME = "fonts/tahomabd.ttf"
+# Montserrat Black
+FONT_NAME = "font.ttf"
 
 FONT_SIZE = {
     2:      int(CELL_SIZE / 2),
