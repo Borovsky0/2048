@@ -29,6 +29,29 @@ def load_score():
     except FileNotFoundError:
         save_score(0)
         return 0
+    
+def save_state(matrix, score):
+    with open('state.bin', 'wb') as file:
+        for row in matrix:
+            for number in row:
+                file.write(number.to_bytes(4, byteorder='big', signed=True))
+
+        file.write(score.to_bytes(4, byteorder='big', signed=True))
+
+def load_state():
+    game = Logic(c.SIZE)
+    score = 0
+
+    try:
+        with open('state.bin', 'rb') as file:
+            for i in range(c.SIZE):
+                for j in range(c.SIZE):
+                    game.matrix[i][j] = int.from_bytes(file.read(4), byteorder='big', signed=True)
+            score = int.from_bytes(file.read(4), byteorder='big', signed=True)
+    except FileNotFoundError:
+        save_state(game.matrix, score)
+        return game.matrix, score
+    return game.matrix, score
 
 def draw(matrix, score, highscore):
     # Временно
@@ -80,11 +103,17 @@ def run():
     highscore = load_score()
 
     game = Logic(c.SIZE)
+
+    tmp_matrix, tmp_score = load_state()
+
+    game.load(tmp_matrix, tmp_score)
+
     game_done = False
 
     while not game_done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                save_state(game.matrix, game.score)
                 game_done = True
             if event.type == pygame.KEYDOWN:
                 if event.key in commands:

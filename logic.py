@@ -1,6 +1,5 @@
 import random
 
-
 class Logic:
     def __init__(self, n):
         self.n = n
@@ -8,6 +7,10 @@ class Logic:
         self.matrix = [[0] * n for _ in range(n)]
         self.add()
         self.add()
+
+    def load(self, matrix, score):
+        self.score = score
+        self.matrix = matrix
 
     def add(self):
         x = random.randint(0, self.n - 1)
