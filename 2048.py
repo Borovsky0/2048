@@ -1,6 +1,6 @@
 import pygame
 import constants as c
-import logic
+from logic import Logic
 import button
 import overlay_screen
 
@@ -13,12 +13,14 @@ screen = pygame.display.set_mode(
 pygame.display.set_caption("2048")
 clock = pygame.time.Clock()
 
+'''
 commands = {
-    pygame.K_UP: logic.up,
-    pygame.K_DOWN: logic.down,
-    pygame.K_LEFT: logic.left,
-    pygame.K_RIGHT: logic.right
+    pygame.K_UP: game.up,
+    pygame.K_DOWN: game.down,
+    pygame.K_LEFT: game.left,
+    pygame.K_RIGHT: game.right
 }
+'''
 
 check_screen = overlay_screen.OverlayScreen(
     c.WINDOW_WIDTH,
@@ -85,9 +87,11 @@ no_button = button.Button(
 )
 
 
-def draw(matrix):
-    screen.fill(c.BACKGROUND_COLOR)
+def draw(matrix, score):
+    # Временно
+    print(score)
 
+    screen.fill(c.BACKGROUND_COLOR)
     x, y = c.PADDING, c.PADDING
 
     # если кнопка новой игры нажата, то restart = True
@@ -128,7 +132,7 @@ def draw(matrix):
 
 
 def run():
-    matrix = logic.game(c.SIZE)
+    game = Logic(c.SIZE)
     game_done = False
 
     while not game_done:
@@ -136,12 +140,25 @@ def run():
             if event.type == pygame.QUIT:
                 game_done = True
             if event.type == pygame.KEYDOWN:
-                if event.key in commands:
-                    matrix, done = commands[event.key](matrix)
-                    if done:
-                        matrix = logic.add(matrix)
+                if event.key == pygame.K_UP:
+                    done = game.up()
+                    if done: 
+                        game.add()
+                elif event.key == pygame.K_DOWN:
+                    done = game.down()
+                    if done: 
+                        game.add()
+                elif event.key == pygame.K_LEFT:
+                    done = game.left()
+                    if done: 
+                        game.left()
+                elif event.key == pygame.K_RIGHT:
+                    done = game.right()
+                    if done: 
+                        game.add()
+                        
 
-        if draw(matrix):
+        if draw(game.matrix, game.score):
             check_screen.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
@@ -168,7 +185,7 @@ def run():
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if yes_button.rect.collidepoint(event.pos):
-                            matrix = logic.game(c.SIZE)
+                            game = Logic(c.SIZE)
                             check_screen_is_on = False
                         if no_button.rect.collidepoint(event.pos):
                             check_screen_is_on = False
@@ -176,7 +193,7 @@ def run():
         pygame.display.flip()
         clock.tick(c.FPS)
 
-        if logic.win(matrix, c.WIN_NUMBER):
+        if game.win(c.WIN_NUMBER):
             win_screen.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
@@ -207,10 +224,10 @@ def run():
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if win_screen_new_game_button.rect.collidepoint(event.pos):
-                            matrix = logic.game(c.SIZE)
+                            game = Logic(c.SIZE)
                             win_screen_is_on = False
 
-        if not logic.game_not_over(matrix):
+        if not game.game_not_over():
             lose_screen.draw(
                 screen,
                 (c.WINDOW_WIDTH / 2, c.WINDOW_HEIGHT / 2)
@@ -241,7 +258,7 @@ def run():
                         game_done = True
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if lose_screen_new_game_button.rect.collidepoint(event.pos):
-                            matrix = logic.game(c.SIZE)
+                            game = Logic(c.SIZE)
                             lose_screen_is_on = False
 
 
