@@ -19,12 +19,28 @@ POWERS = {
     2048:   11
 }
 
+CELL_COLOR = {
+    0:      "#cdc1b4",
+    2:      "#eee4da",
+    4:      "#eee1c9",
+    8:      "#f3b27a",
+    16:     "#f69664",
+    32:     "#f77c5f",
+    64:     "#f75f3b",
+    128:    "#eed072",
+    256:    "#edcc62",
+    512:    "#edc850",
+    1024:   "#edc53f",
+    2048:   "#edc22e"
+}
+
 # Styling
 CELL_SIZE = 150
 
 BUTTON_WIDTH = CELL_SIZE
 BUTTON_HEIGHT = int(CELL_SIZE / 2)
-NEW_GAME_BUTTON_TEXT_FONT_SIZE = int(BUTTON_HEIGHT * 0.4)
+BUTTON_COLOR = CELL_COLOR[0]
+NEW_GAME_BUTTON_TEXT_FONT_SIZE = int(BUTTON_HEIGHT * 0.40)
 TEXT_FONT_COLOR = "#fcfbf4"
 
 PADDING = int(CELL_SIZE / 7)
@@ -41,20 +57,6 @@ BACKGROUND_COLOR = "#bbada0"
 WIN_SCREEN_COLOR = "#edc22e"
 LOSE_SCREEN_COLOR = "#f75f3b"
 
-CELL_COLOR = {
-    0:      "#cdc1b4",
-    2:      "#eee4da",
-    4:      "#eee1c9",
-    8:      "#f3b27a",
-    16:     "#f69664",
-    32:     "#f77c5f",
-    64:     "#f75f3b",
-    128:    "#eed072",
-    256:    "#edcc62",
-    512:    "#edc850",
-    1024:   "#edc53f",
-    2048:   "#edc22e"
-}
 
 TEXT_COLOR = {
     2:      "#776e65",
@@ -124,7 +126,7 @@ WIN_SCREEN = overlay_screen.OverlayScreen(
 MAIN_NEW_GAME_BUTTON = button.Button(
     BUTTON_WIDTH,
     BUTTON_HEIGHT,
-    CELL_COLOR[0],
+    BUTTON_COLOR,
     "NEW GAME",
     TEXT_FONT_COLOR,
     FONT_NAME,
@@ -135,7 +137,7 @@ MAIN_NEW_GAME_BUTTON = button.Button(
 YES_BUTTON = button.Button(
     BUTTON_WIDTH,
     BUTTON_HEIGHT,
-    CELL_COLOR[0],
+    BUTTON_COLOR,
     "YES",
     TEXT_FONT_COLOR,
     FONT_NAME,
@@ -145,7 +147,7 @@ YES_BUTTON = button.Button(
 NO_BUTTON = button.Button(
     BUTTON_WIDTH,
     BUTTON_HEIGHT,
-    CELL_COLOR[0],
+    BUTTON_COLOR,
     "NO",
     TEXT_FONT_COLOR,
     FONT_NAME,
@@ -155,7 +157,7 @@ NO_BUTTON = button.Button(
 WIN_SCREEN_NEW_GAME_BUTTON = button.Button(
     BUTTON_WIDTH,
     BUTTON_HEIGHT,
-    CELL_COLOR[0],
+    BUTTON_COLOR,
     "NEW GAME",
     TEXT_FONT_COLOR,
     FONT_NAME,
@@ -166,10 +168,36 @@ WIN_SCREEN_NEW_GAME_BUTTON = button.Button(
 LOSE_SCREEN_NEW_GAME_BUTTON = button.Button(
     BUTTON_WIDTH,
     BUTTON_HEIGHT,
-    CELL_COLOR[0],
+    BUTTON_COLOR,
     "NEW GAME",
     TEXT_FONT_COLOR,
     FONT_NAME,
     NEW_GAME_BUTTON_TEXT_FONT_SIZE,
     button.ButtonTextLayout.column
+)
+
+SCORE_BUTTON_FONT_SIZE = int(BUTTON_HEIGHT * 0.2)
+
+SCORE_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    BUTTON_COLOR,
+    "SCORE",
+    "#EEE1C9",
+    FONT_NAME,
+    SCORE_BUTTON_FONT_SIZE,
+    button.ButtonTextLayout.on_top,
+    clickable=False
+)
+
+HIGHSCORE_BUTTON = button.Button(
+    BUTTON_WIDTH,
+    BUTTON_HEIGHT,
+    BUTTON_COLOR,
+    "BEST",
+    "#EEE1C9",
+    FONT_NAME,
+    SCORE_BUTTON_FONT_SIZE,
+    button.ButtonTextLayout.on_top,
+    clickable=False
 )

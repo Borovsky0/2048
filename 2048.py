@@ -18,9 +18,16 @@ commands = {
     pygame.K_RIGHT: "right"
 }
 
+score_button_font = pygame.font.Font(
+    c.FONT_NAME,
+    c.NEW_GAME_BUTTON_TEXT_FONT_SIZE
+)
+
+
 def save_score(score):
     with open('score.bin', 'wb') as file:
-        file.write(score.to_bytes(4, byteorder='big', signed=True))                    
+        file.write(score.to_bytes(4, byteorder='big', signed=True))
+
 
 def load_score():
     try:
@@ -29,6 +36,7 @@ def load_score():
     except FileNotFoundError:
         save_score(0)
         return 0
+
 
 def draw(matrix, score, highscore):
     # Временно
@@ -42,6 +50,28 @@ def draw(matrix, score, highscore):
     restart = False
     if c.MAIN_NEW_GAME_BUTTON.draw(screen, x, y):
         restart = True
+
+    x += c.CELL_SIZE * 2 + c.PADDING * 2
+    c.SCORE_BUTTON.draw(screen, x, y)
+    score_button_text = score_button_font.render(
+        str(score),
+        True,
+        c.TEXT_FONT_COLOR
+    )
+    screen.blit(score_button_text, score_button_text.get_rect(
+        center=(x + c.BUTTON_WIDTH / 2, y + (c.BUTTON_HEIGHT / 3) * 2)
+    ))
+
+    x += c.PADDING + c.CELL_SIZE
+    c.HIGHSCORE_BUTTON.draw(screen, x, y)
+    highscore_button_text = score_button_font.render(
+        str(highscore),
+        True,
+        c.TEXT_FONT_COLOR
+    )
+    screen.blit(highscore_button_text, highscore_button_text.get_rect(
+        center=(x + c.BUTTON_WIDTH / 2, y + (c.BUTTON_HEIGHT / 3) * 2)
+    ))
 
     y += c.PADDING + c.BUTTON_HEIGHT
     for i in range(len(matrix)):
@@ -76,7 +106,6 @@ def draw(matrix, score, highscore):
 
 
 def run():
-
     highscore = load_score()
 
     game = Logic(c.SIZE)
