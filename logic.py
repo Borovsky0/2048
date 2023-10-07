@@ -50,17 +50,12 @@ class Logic:
 
     def compress_row0(self):
         new_row = [0] * self.n
-        done = False
         count = 0
         for j in range(self.n):
             if self.matrix[0][j] != 0:
                 new_row[count] = self.matrix[0][j]
-                if j != count:
-                    done = True
                 count += 1
-
         self.matrix[0] = new_row
-        return done
 
     def merge(self, done):
         for i in range(self.n):
@@ -115,7 +110,7 @@ class Logic:
     def left(self):
         done = self.compress()
         done = self.merge(done)
-        done = self.compress_row0()
+        self.compress_row0()
         return done
 
     def right(self):

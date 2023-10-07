@@ -133,9 +133,7 @@ def run():
 
     game = Logic(c.SIZE)
 
-    tmp_matrix, tmp_score = load_state()
-
-    game.load(tmp_matrix, tmp_score)
+    game.load(*load_state())
 
     game_done = False
 
