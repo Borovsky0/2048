@@ -5,9 +5,9 @@ import constants as c
 from logic import Logic
 
 if platform.system() == 'Windows':
-    data_folder = os.path.join(os.getenv('APPDATA'), '2048')
+    data_folder = os.path.join(os.getenv('LOCALAPPDATA'), '2048')
 elif platform.system() == 'Linux':
-    data_folder = os.path.join(os.getenv('XDG_DATA_HOME'), '2048')
+    data_folder = os.path.join(os.getenv('HOME'), '2048')
 
 pygame.init()
 pygame.mixer.init()
