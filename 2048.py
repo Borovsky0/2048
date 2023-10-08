@@ -1,6 +1,13 @@
 import pygame
+import os
+import platform
 import constants as c
 from logic import Logic
+
+if platform.system() == 'Windows':
+    data_folder = os.path.join(os.getenv('APPDATA'), '2048')
+elif platform.system() == 'Linux':
+    data_folder = os.path.join(os.getenv('XDG_DATA_HOME'), '2048')
 
 pygame.init()
 pygame.mixer.init()
@@ -26,13 +33,16 @@ score_button_font = pygame.font.Font(
 
 
 def save_score(score):
-    with open('score.bin', 'wb') as file:
+    if not os.path.exists(data_folder):
+        os.mkdir(data_folder)
+
+    with open(os.path.join(data_folder, 'score.bin'), 'wb') as file:
         file.write(score.to_bytes(4, byteorder='big', signed=True))
 
 
 def load_score():
     try:
-        with open('score.bin', 'rb') as file:
+        with open(os.path.join(data_folder, 'score.bin'), 'rb') as file:
             return int.from_bytes(file.read(), byteorder='big', signed=True)
     except FileNotFoundError:
         save_score(0)
@@ -40,7 +50,10 @@ def load_score():
 
 
 def save_state(matrix, score):
-    with open('state.bin', 'wb') as file:
+    if not os.path.exists(data_folder):
+        os.mkdir(data_folder)
+
+    with open(os.path.join(data_folder, 'state.bin'), 'wb') as file:
         for row in matrix:
             for number in row:
                 file.write(number.to_bytes(4, byteorder='big', signed=True))
@@ -53,7 +66,7 @@ def load_state():
     score = 0
 
     try:
-        with open('state.bin', 'rb') as file:
+        with open(os.path.join(data_folder, 'state.bin'), 'rb') as file:
             for i in range(c.SIZE):
                 for j in range(c.SIZE):
                     game.matrix[i][j] = int.from_bytes(file.read(4), byteorder='big', signed=True)
