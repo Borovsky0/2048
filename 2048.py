@@ -9,6 +9,7 @@ screen = pygame.display.set_mode(
     # pygame.RESIZABLE
 )
 pygame.display.set_caption("2048")
+pygame.display.set_icon(pygame.image.load('icon.png'))
 clock = pygame.time.Clock()
 
 commands = {
