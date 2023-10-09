@@ -2,7 +2,7 @@
 
 Desktop implementation of the [2048](https://github.com/gabrielecirulli/2048) game in Python using pygame
 
-![gameplay](https://github.com/Borovsky0/2048/assets/91292282/87f71ebe-51d1-42f9-a50a-8405481d9e2b)
+![gameplay](https://github.com/Borovsky0/2048/assets/91292282/74b4fb4d-a7a6-4139-9fc5-a73c7bc84b2e)
 
 ### Start the game
 
